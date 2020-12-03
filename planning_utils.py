@@ -88,7 +88,7 @@ def valid_actions(grid, current_node):
     return valid_actions
 
 
-def a_star(grid, h, start, goal):
+def a_star_grid(grid, h, start, goal):
 
     path = []
     path_cost = 0
@@ -139,8 +139,88 @@ def a_star(grid, h, start, goal):
         print('**********************') 
     return path[::-1], path_cost
 
-
+###################################################################################################
 
 def heuristic(position, goal_position):
     return np.linalg.norm(np.array(position) - np.array(goal_position))
 
+
+def a_star_graph(graph, heuristic, start, goal):
+    """Modified A* to work with NetworkX graphs."""
+    
+    # TODO: complete
+    print("Planning Start : ", start)
+    print("Planning Goal : ", goal)
+    path = []
+    queue = PriorityQueue()
+    queue.put((0, start))
+    visited = set(start)
+
+    branch = {}
+    found = False
+    
+    while not queue.empty():
+        item = queue.get()
+        current_cost = item[0]
+        current_node = item[1]
+
+        if current_node == goal:        
+            print('Found a path.')
+            found = True
+            break
+        else:
+            for next_node in graph[current_node]:
+                cost = graph.edges[current_node, next_node]['weight']
+                new_cost = current_cost + cost + heuristic(next_node, goal)
+                
+                if next_node not in visited:                
+                    visited.add(next_node)               
+                    queue.put((new_cost, next_node))
+                    
+                    branch[next_node] = (new_cost, current_node)
+             
+    path = []
+    path_cost = 0
+    if found:
+        
+        # retrace steps
+        path = []
+        n = goal
+        path_cost = branch[n][0]
+        path.append(current_node)
+        while branch[n][1] != start:
+            path.append(branch[n][1])
+            n = branch[n][1]
+        path.append(branch[n][1])
+        
+    return path[::-1], path_cost
+
+
+########## pruning ##################
+
+def point(p):
+    return np.array([p[0], p[1], 1.]).reshape(1, -1)
+
+def collinearity_check(p1, p2, p3, epsilon=1e-6):   
+    m = np.concatenate((p1, p2, p3), 0)
+    det = np.linalg.det(m)
+    return abs(det) < epsilon
+
+def prune_path(path):
+    if path is not None:
+        pruned_path = [p for p in path]
+        # TODO: prune the path!
+        i = 0
+        while i < len(pruned_path) - 2:
+            p1 = point(pruned_path[i])
+            p2 = point(pruned_path[i+1])
+            p3 = point(pruned_path[i+2])
+            
+            if collinearity_check(p1, p2 ,p3):
+                pruned_path.remove(pruned_path[i+1])
+            else:
+                i += 1
+    else:
+        pruned_path = path
+        
+    return pruned_path
