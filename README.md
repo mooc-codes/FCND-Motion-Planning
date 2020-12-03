@@ -139,5 +139,5 @@ Here are the images of start and goal positions.
 ### 1. Goal Positon
 ![Drone Goal Position](./misc/goal_drone.png)
 
-### Here is a <a href="./misc/drone_flight_video.mkv">video</a> of the drone in action
+### Here is a <a href="https://youtu.be/TR6J0TWS7p0">video</a> of the drone in action
 
