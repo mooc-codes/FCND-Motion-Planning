@@ -3,7 +3,7 @@ from planning_utils import a_star_graph, heuristic, create_grid, a_star_grid
 from sampling import Sampler, create_graph
 import json
 
-def get_path():
+def get_path(start=(0, 0, 6), goal=(331, 116, 19)):
         
         data = np.loadtxt('colliders.csv', delimiter=',', dtype='Float64', skiprows=2)
         north_offset = -316
@@ -14,8 +14,8 @@ def get_path():
         print("BBB")
         nodes = sampler.sample(3000)
         # (339, 380) (441, 519)
-        start = (0, 0, 6)
-        goal = (331, 116, 19)
+        # start = (0, 0, 6)
+        # goal = (331, 116, 19)
         nodes += [start, goal]
         print(nodes)
         g = create_graph(nodes, k=10, polygons=polygons)

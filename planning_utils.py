@@ -55,6 +55,11 @@ class Action(Enum):
     EAST = (0, 1, 1)
     NORTH = (-1, 0, 1)
     SOUTH = (1, 0, 1)
+    diag_cost = np.sqrt(2)
+    NORTH_WEST = (-1, -1, diag_cost)
+    NORTH_EAST = (-1, 1, diag_cost)
+    SOUTH_WEST = (1.-1, diag_cost)
+    SOUTH_EAST = (1, 1, diag_cost)
 
     @property
     def cost(self):

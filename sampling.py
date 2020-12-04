@@ -67,10 +67,7 @@ class Sampler:
         self._zmin = 20
         # limit z-axis
         self._zmax = 30
-        # Record maximum polygon dimension in the xy plane
-        # multiply by 2 since given sizes are half widths
-        # This is still rather clunky but will allow us to 
-        # cut down the number of polygons we compare with by a lot.
+
         print("Extract Polygons..")
         self._max_poly_xy = 2 * np.max((data[:, 3], data[:, 4]))
         print("Extract Polygons..")
