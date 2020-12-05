@@ -47,7 +47,7 @@ def extract_polygons(data):
         corners = [(obstacle[0], obstacle[2]), (obstacle[0], obstacle[3]), (obstacle[1], obstacle[3]), (obstacle[1], obstacle[2])]
         
         # TODO: Compute the height of the polygon
-        height = alt + d_alt
+        height = alt + d_alt + saftey_distance
 
         p = Poly(corners, height)
         polygons.append(p)
