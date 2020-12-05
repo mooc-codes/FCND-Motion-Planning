@@ -104,6 +104,18 @@ Then the offsets are added to the local coordinates to get the position on the g
     NORTH_EAST = (-1, 1, diag_cost)
     SOUTH_WEST = (1.-1, diag_cost)
     SOUTH_EAST = (1, 1, diag_cost)
+
+
+    # Validitiy check
+    if x - 1 < 0 or y - 1 < 0 or grid[x- 1,y- 1] == 1:
+        valid_actions.remove(Action.NORTH_WEST)
+    if x - 1 < 0 or y + 1 > m or grid[x- 1,y + 1] == 1:
+        valid_actions.remove(Action.NORTH_EAST)    
+    if x + 1 > n or y - 1 < 0 or grid[x + 1,y - 1] == 1:
+        valid_actions.remove(Action.SOUTH_WEST)
+    if x + 1 > n or y + 1 > m or grid[x + 1,y + 1] == 1:
+        valid_actions.remove(Action.SOUTH_EAST)
+
 ```
 
 For the path planning problem, I have chosen to use a graph based representation of the space.
